@@ -25,11 +25,7 @@ import Layout from '@/layout'
   }
  */
 
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
+
 export const constantRoutes = [
   {
     path: '/login',
