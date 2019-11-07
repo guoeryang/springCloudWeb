@@ -16,7 +16,7 @@ export function get() {
 
 export function getChartData() {
   return request({
-    url: 'api/visits/chartData',
+    url: 'api/chartData',
     method: 'get'
   })
 }

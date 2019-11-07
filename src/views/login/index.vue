@@ -117,7 +117,7 @@ export default {
             Cookies.remove('password')
             Cookies.remove('rememberMe')
           }
-          this.$store.dispatch('user/login', user).then(() => {
+          this.$store.dispatch('Login', user).then(() => {
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(error => {

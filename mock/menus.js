@@ -362,13 +362,13 @@ export default [
     }
   },
   {
-    url: '/api/visits/chartData',
+    url: '/api/chartData',
     type: 'get',
     response: config => {
       return {
-        weekDays: ["Fri","Sat","Sun","Mon","Tue","Wed","Thu"],
-        ipData: [486,220,211,1063,645,633,489],
-        visitsData: [657,274,259,1347,933,910,784]
+        weekDays: ['Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu'],
+        ipData: [486, 220, 211, 1063, 645, 633, 489],
+        visitsData: [657, 274, 259, 1347, 933, 910, 784]
       }
     }
   }

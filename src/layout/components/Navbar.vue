@@ -96,6 +96,7 @@ export default {
       })
     },
     toggleSideBar() {
+      console.log('click')
       this.$store.dispatch('ToggleSideBar')
     },
     logout() {
