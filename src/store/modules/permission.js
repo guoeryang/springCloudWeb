@@ -1,5 +1,5 @@
 import { constantRoutes } from '@/router/index'
-import Layout from '@/layout/index'
+import Layout from '@/layout/Layout'
 
 const permission = {
   state: {

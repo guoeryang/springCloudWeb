@@ -1,100 +1,89 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, getInfo, logout } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { resetRouter } from '@/router'
 
-const state = {
-  token: getToken(),
-  name: '',
-  avatar: '',
-  user: {},
-  roles: [],
-  // 第一次加载菜单时用到
-  loadMenus: false
-}
+const user = {
+  state: {
+    token: getToken(),
+    user: {},
+    roles: [],
+    // 第一次加载菜单时用到
+    loadMenus: false
+  },
 
-const mutations = {
-  SET_TOKEN: (state, token) => {
-    state.token = token
+  mutations: {
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    },
+    SET_USER: (state, user) => {
+      state.user = user
+    },
+    SET_ROLES: (state, roles) => {
+      state.roles = roles
+    },
+    SET_LOAD_MENUS: (state, loadMenus) => {
+      state.loadMenus = loadMenus
+    }
   },
-  SET_NAME: (state, name) => {
-    state.name = name
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
-  },
-  SET_USER: (state, user) => {
-    state.user = user
-  },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
-  },
-  SET_LOAD_MENUS: (state, loadMenus) => {
-    state.loadMenus = loadMenus
+
+  actions: {
+    // 登录
+    Login({ commit }, userInfo) {
+      const username = userInfo.username
+      const password = userInfo.password
+      const code = userInfo.code
+      const uuid = userInfo.uuid
+      const rememberMe = userInfo.rememberMe
+      return new Promise((resolve, reject) => {
+        login(username, password, code, uuid).then(res => {
+          setToken(res.token, rememberMe)
+          commit('SET_TOKEN', res.token)
+          setUserInfo(res.user, commit)
+          // 第一次加载菜单时用到， 具体见 src 目录下的 permission.js
+          commit('SET_LOAD_MENUS', true)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 获取用户信息
+    GetInfo({ commit }) {
+      return new Promise((resolve, reject) => {
+        getInfo().then(res => {
+          setUserInfo(res, commit)
+          resolve(res)
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
+    // 登出
+    LogOut({ commit }) {
+      return new Promise((resolve, reject) => {
+        logout().then(res => {
+          logOut(commit)
+          resolve()
+        }).catch(error => {
+          logOut(commit)
+          reject(error)
+        })
+      })
+    },
+
+    updateLoadMenus({ commit }) {
+      return new Promise((resolve, reject) => {
+        commit('SET_LOAD_MENUS', false)
+      })
+    }
   }
 }
 
-const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const username = userInfo.username
-    const password = userInfo.password
-    const code = userInfo.code
-    const uuid = userInfo.uuid
-    const rememberMe = userInfo.rememberMe
-    return new Promise((resolve, reject) => {
-      login(username, password, code, uuid).then(res => {
-        setToken(res.token, rememberMe)
-        commit('SET_TOKEN', res.token)
-        setUserInfo(res.user, commit)
-        // 第一次加载菜单时用到， 具体见 src 目录下的 permission.js
-        commit('SET_LOAD_MENUS', true)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        commit('SET_NAME', response.name)
-        commit('SET_AVATAR', response.avatar)
-        setUserInfo(response, commit)
-        resolve(response)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // user logout
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        commit('SET_TOKEN', '')
-        removeToken()
-        resetRouter()
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-  updateLoadMenus({ commit }) {
-    return new Promise((resolve, reject) => {
-      commit('SET_LOAD_MENUS', false)
-    })
-  },
-  // remove token
-  resetToken({ commit }) {
-    return new Promise(resolve => {
-      commit('SET_TOKEN', '')
-      removeToken()
-      resolve()
-    })
-  }
+export const logOut = (commit) => {
+  commit('SET_TOKEN', '')
+  commit('SET_ROLES', [])
+  removeToken()
 }
 
 export const setUserInfo = (res, commit) => {
@@ -104,15 +93,7 @@ export const setUserInfo = (res, commit) => {
   } else {
     commit('SET_ROLES', res.roles)
   }
-  commit('SET_NAME', res.name)
-  commit('SET_AVATAR', res.avatar)
   commit('SET_USER', res)
 }
 
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-}
-
+export default user

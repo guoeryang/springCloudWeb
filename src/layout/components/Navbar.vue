@@ -1,18 +1,23 @@
 <template>
   <div class="navbar">
     <hamburger :toggle-click="toggleSideBar" :is-active="sidebar.opened" class="hamburger-container"/>
-    <breadcrumb class="breadcrumb-container" />
+    <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <Github class="screenfull right-menu-item" />
+          <Github class="screenfull right-menu-item"/>
+        </el-tooltip>
+      </template>
+      <template v-if="device!=='mobile'">
+        <el-tooltip content="全屏" effect="dark" placement="bottom">
+          <screenfull class="screenfull right-menu-item"/>
         </el-tooltip>
       </template>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
+          <img :src="user.avatar ? baseApi + '/avatar/' + user.avatar : Avatar" class="user-avatar">
+          <i class="el-icon-caret-bottom"/>
         </div>
         <el-dropdown-menu slot="dropdown">
           <a target="_blank" href="https://docs.auauz.net/">
@@ -45,12 +50,14 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import Screenfull from '@/components/Screenfull'
 import Github from '@/components/Github'
 import Avatar from '@/assets/avatar/avatar.png'
 export default {
   components: {
     Breadcrumb,
     Hamburger,
+    Screenfull,
     Github
   },
   data() {
@@ -62,9 +69,9 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
-	  'user',
-      'device'
+      'user',
+      'device',
+      'baseApi'
     ]),
     show: {
       get() {

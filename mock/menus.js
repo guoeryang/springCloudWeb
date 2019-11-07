@@ -336,5 +336,40 @@ export default [
     response: config => {
       return menuss
     }
+  },
+  {
+    url: '/api/visits',
+    type: 'get',
+    response: config => {
+      return {
+        newVisits: 784,
+        newIp: 489,
+        recentVisits: 5164,
+        recentIp: 3747
+      }
+    }
+  },
+  {
+    url: '/api/visitsCount',
+    type: 'post',
+    response: config => {
+      return {
+        newVisits: 784,
+        newIp: 489,
+        recentVisits: 5164,
+        recentIp: 3747
+      }
+    }
+  },
+  {
+    url: '/api/visits/chartData',
+    type: 'get',
+    response: config => {
+      return {
+        weekDays: ["Fri","Sat","Sun","Mon","Tue","Wed","Thu"],
+        ipData: [486,220,211,1063,645,633,489],
+        visitsData: [657,274,259,1347,933,910,784]
+      }
+    }
   }
 ]
