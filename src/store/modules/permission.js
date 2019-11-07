@@ -1,15 +1,15 @@
-import { constantRoutes } from '@/router/index'
+import { constantRouterMap } from '@/router/routers'
 import Layout from '@/layout/Layout'
 
 const permission = {
   state: {
-    routers: constantRoutes,
+    routers: constantRouterMap,
     addRouters: []
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
-      state.routers = constantRoutes.concat(routers)
+      state.routers = constantRouterMap.concat(routers)
     }
   },
   actions: {
