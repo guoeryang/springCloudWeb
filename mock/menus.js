@@ -271,58 +271,25 @@ const menuss = [{
     }
   }]
 }, {
-  name: '多级菜单',
-  path: '/nested',
-  hidden: true,
+  name: '线上开发',
+  path: '/online',
+  hidden: false,
   redirect: 'noredirect',
   component: 'Layout',
   alwaysShow: true,
   meta: {
-    title: '多级菜单',
-    icon: 'menu',
+    title: '线上开发',
+    icon: 'online',
     noCache: true
   },
   children: [{
-    name: '二级菜单1',
-    path: 'menu1',
+    name: 'Cgfrom',
+    path: '/online/cgfrom',
     hidden: false,
-    redirect: 'noredirect',
-    component: 'nested/menu1/index',
-    alwaysShow: true,
+    component: 'components/cgform',
     meta: {
-      title: '二级菜单1',
-      icon: 'menu',
-      noCache: true
-    },
-    children: [{
-      name: '三级菜单1',
-      path: 'menu1-1',
-      hidden: false,
-      component: 'nested/menu1/menu1-1',
-      meta: {
-        title: '三级菜单1',
-        icon: 'menu',
-        noCache: true
-      }
-    }, {
-      name: '三级菜单2',
-      path: 'menu1-2',
-      hidden: false,
-      component: 'nested/menu1/menu1-2',
-      meta: {
-        title: '三级菜单2',
-        icon: 'menu',
-        noCache: true
-      }
-    }]
-  }, {
-    name: '二级菜单2',
-    path: 'menu2',
-    hidden: false,
-    component: 'nested/menu2/index',
-    meta: {
-      title: '二级菜单2',
-      icon: 'menu',
+      title: '在线设计',
+      icon: 'addtable',
       noCache: true
     }
   }]
