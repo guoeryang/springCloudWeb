@@ -286,7 +286,7 @@ const menuss = [{
     name: 'Cgfrom',
     path: '/online/cgfrom',
     hidden: false,
-    component: 'components/cgform',
+    component: 'online/cgform/index',
     meta: {
       title: '在线设计',
       icon: 'addtable',

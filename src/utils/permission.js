@@ -6,6 +6,7 @@ import store from '@/store'
  * @example see @/views/auth/directive.vue
  */
 export default function checkPermission(value) {
+	console.log('获取权限')
   if (value && value instanceof Array && value.length > 0) {
     const roles = store.getters && store.getters.roles
     const permissionRoles = value
