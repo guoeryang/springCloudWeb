@@ -4,11 +4,13 @@ import { param2Obj } from '../src/utils'
 import user from './user'
 import table from './table'
 import menus from './menus'
+import cgform from './cgform'
 
 const mocks = [
   ...user,
   ...table,
-  ...menus
+  ...menus,
+  ...cgform
 ]
 
 // for front mock

@@ -14,8 +14,8 @@ export default {
       return new Promise((resolve, reject) => {
         this.loading = true
         initData(this.url, this.params).then(res => {
-          this.total = res.totalElements
-          this.data = res.content
+          this.total = res.result.totalElements
+          this.data = res.result.records
           setTimeout(() => {
             this.loading = false
           }, this.time)

@@ -3,56 +3,119 @@
     <!--工具栏-->
     <div class="head-container">
       <!-- 搜索 -->
-      <el-input clearable placeholder="输入表名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
-      <el-button  class="filter-item" size="mini" type="success" icon="el-icon-search"  @click="toQuery"> 搜索 </el-button>
-      <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;" >
+      <el-input  placeholder="输入表名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
+      <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">搜索</el-button>
+      <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;">
         <el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click=" dialog = true;isAdd = true;">新增</el-button>
       </div>
       <div style="display: inline-block;">
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-edit" @click="doCgformButton" >自定义按钮</el-button>
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-edit"
+          @click="doCgformButton"
+        >自定义按钮</el-button>
       </div>
       <div style="display: inline-block;">
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-edit" @click="doEnhanceJs" >JS增强</el-button>
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-edit"
+          @click="doEnhanceJs"
+        >JS增强</el-button>
       </div>
       <div style="display: inline-block;">
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-edit" @click="doEnhanceSql" >SQL增强</el-button>
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-edit"
+          @click="doEnhanceSql"
+        >SQL增强</el-button>
       </div>
       <div style="display: inline-block;">
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-edit" @click="doEnhanceJava" >Java增强</el-button>
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-edit"
+          @click="doEnhanceJava"
+        >Java增强</el-button>
       </div>
       <div style="display: inline-block;">
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-upload" @click="importOnlineForm" >从数据库导入表单</el-button>
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-upload"
+          @click="importOnlineForm"
+        >从数据库导入表单</el-button>
       </div>
-      <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;" >
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click="goGenerateCode">代码生成</el-button>
+      <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;">
+        <el-button
+          class="filter-item"
+          size="mini"
+          type="primary"
+          icon="el-icon-plus"
+          @click="goGenerateCode"
+        >代码生成</el-button>
       </div>
       <!--表格渲染-->
-      <el-table v-loading="loading" :data="data" size="small" style="width: 100%;" >
-	     <el-table-column type="selection" width="55"/>
-		 <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="100px" label="表类型" />
-		 <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="100px" label="表名" />
-		 <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="100px" label="表描述" />
-		 <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="100px" label="版本" />
-		 <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="140px" label="同步数据库状态" />
-         <el-table-column   label="操作" width="180px" align="center" fixed="right" >
-		     <template slot-scope="scope">
-			     <el-button v-permission="['admin', 'timing:edit']" size="mini" style="margin-right: 3px;"  type="text" @click="edit(scope.row)">编辑</el-button>
-				 <el-button v-permission="['admin', 'timing:edit']" size="mini" style="margin-left: -2px"   type="text" @click="execute(scope.row.id)" >执行</el-button>
-				 <el-button v-permission="['admin', 'timing:edit']" size="mini" style="margin-left: 3px"    type="text" @click="updateStatus(scope.row.id, scope.row.isPause ? '恢复' : '暂停')"> {{ scope.row.isPause ? "恢复" : "暂停" }}  </el-button>
-				 <el-popover v-permission="['admin', 'timing:del']"  :ref="scope.row.id"  placement="top"  width="200" >
-				     <p>确定停止并删除该任务吗？</p>
-				     <div style="text-align: right; margin: 0">
-				         <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()" >取消</el-button >
-						 <el-button :loading="delLoading" type="primary"  size="mini"  @click="subDelete(scope.row.id)" >确定</el-button >
-				     </div>
-				     <el-button slot="reference" type="text" size="mini">删除</el-button>
-				</el-popover>
-		     </template>
-		 </el-table-column>
-	  </el-table>
+      <el-table v-loading="loading" :data="data" size="small" style="width: 100%;">
+        <el-table-column type="selection" width="55" />
+        <el-table-column :show-overflow-tooltip="true" prop="id" width="100px" label="表名" />
+        <el-table-column :show-overflow-tooltip="true" prop="tableName" width="100px" label="表名" />
+        <el-table-column :show-overflow-tooltip="true" prop="tableType" width="100px" label="表类型" />
+        <el-table-column :show-overflow-tooltip="true" prop="tableTxt" width="100px" label="表描述" />
+        <el-table-column :show-overflow-tooltip="true" prop="tableVersion" width="100px" label="版本" />
+        <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="140px" label="同步数据库状态"/>
+        <el-table-column label="操作" width="180px" align="center" fixed="right">
+          <template slot-scope="scope">
+            <el-button
+              v-permission="['admin', 'timing:edit']"
+              size="mini"
+              style="margin-right: 3px;"
+              type="text"
+              @click="edit(scope.row)" >编辑</el-button>
+            <el-button
+              v-permission="['admin', 'timing:edit']"
+              size="mini"
+              style="margin-left: -2px"
+              type="text"
+              @click="execute(scope.row.id)"
+            >执行</el-button>
+            <el-button
+              v-permission="['admin', 'timing:edit']"
+              size="mini"
+              style="margin-left: 3px"
+              type="text"
+              @click="updateStatus(scope.row.id, scope.row.isPause ? '恢复' : '暂停')"
+            >{{ scope.row.isPause ? "恢复" : "暂停" }}</el-button>
+            <el-popover
+              v-permission="['admin', 'timing:del']"
+              :ref="scope.row.id"
+              placement="top"
+              width="200"
+            >
+              <p>确定停止并删除该任务吗？</p>
+              <div style="text-align: right; margin: 0">
+                <el-button size="mini" type="text" @click="$refs[scope.row.id].doClose()">取消</el-button>
+                <el-button
+                  :loading="delLoading"
+                  type="primary"
+                  size="mini"
+                  @click="subDelete(scope.row.id)"
+                >确定</el-button>
+              </div>
+              <el-button slot="reference" type="text" size="mini">删除</el-button>
+            </el-popover>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-	
-	
+
     <!--分页组件-->
     <el-pagination
       :total="total"
@@ -66,17 +129,9 @@
 <script>
 import checkPermission from "@/utils/permission";
 import initData from "@/mixins/initData";
-import {
-  del,
-  updateIsPause,
-  execution,
-  add,
-  edit,
-  downloadJobs
-} from "@/api/timing";
 import { parseTime, downloadFile } from "@/utils/index";
 export default {
-  name: "Timing",
+  name: "cgform",
   mixins: [initData],
   data() {
     return {
@@ -119,7 +174,7 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = "api/jobs";
+      this.url = "api/cgform/list";
       const sort = "id,desc";
       const query = this.query;
       const value = query.value;
@@ -160,24 +215,24 @@ export default {
           console.log(err.response.data.message);
         });
     },
-	doCgformButton() {
-	  console.log('doCgformButton');
-	},
-	doEnhanceJs() {
-	  console.log('doEnhanceJs');
-	},
-	doEnhanceSql() {
-	  console.log('doEnhanceSql');
-	},
-	importOnlineForm() {
-	  console.log('importOnlineForm');
-	},
-	doEnhanceJava() {
-	  console.log('doEnhanceJava');
-	},
-	goGenerateCode() {
-	  console.log('goGenerateCode');
-	},
+    doCgformButton() {
+      console.log("doCgformButton");
+    },
+    doEnhanceJs() {
+      console.log("doEnhanceJs");
+    },
+    doEnhanceSql() {
+      console.log("doEnhanceSql");
+    },
+    importOnlineForm() {
+      console.log("importOnlineForm");
+    },
+    doEnhanceJava() {
+      console.log("doEnhanceJava");
+    },
+    goGenerateCode() {
+      console.log("goGenerateCode");
+    },
     subDelete(id) {
       this.delLoading = true;
       del(id)
@@ -199,6 +254,7 @@ export default {
         });
     },
     toQuery() {
+      console.log('select')
       this.page = 0;
       this.init();
     },
