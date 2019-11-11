@@ -3,13 +3,14 @@
     <!--工具栏-->
     <div class="head-container">
       <!-- 搜索 -->
-      <el-input  placeholder="输入表名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
+      <el-input  v-model="query.value" placeholder="输入表名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
       <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">搜索</el-button>
       <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;">
         <el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click=" dialog = true;isAdd = true;">新增</el-button>
       </div>
       <div style="display: inline-block;">
         <el-button
+          :disabled="data.length === 0 || $refs.table.selection.length === 0"
           class="filter-item"
           size="mini"
           type="primary"
@@ -18,7 +19,8 @@
         >自定义按钮</el-button>
       </div>
       <div style="display: inline-block;">
-        <el-button
+        <el-button 
+          :disabled="data.length === 0 || $refs.table.selection.length === 0"
           class="filter-item"
           size="mini"
           type="primary"
@@ -63,7 +65,7 @@
         >代码生成</el-button>
       </div>
       <!--表格渲染-->
-      <el-table v-loading="loading" :data="data" size="small" style="width: 100%;">
+      <el-table v-loading="loading" ref="table" :data="data" size="small" style="width: 100%;">
         <el-table-column type="selection" width="55" />
         <el-table-column :show-overflow-tooltip="true" prop="id" width="100px" label="表名" />
         <el-table-column :show-overflow-tooltip="true" prop="tableName" width="100px" label="表名" />
@@ -180,11 +182,7 @@ export default {
       const value = query.value;
       this.params = { page: this.page, size: this.size, sort: sort };
       if (value) {
-        this.params["jobName"] = value;
-      }
-      if (query.date) {
-        this.params["startTime"] = query.date[0];
-        this.params["endTime"] = query.date[1];
+        this.params["tableName"] = value;
       }
       return true;
     },
