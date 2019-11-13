@@ -5,8 +5,8 @@
       <!-- 搜索 -->
       <el-input  v-model="query.value" placeholder="输入表名称搜索" style="width: 200px;" class="filter-item" @keyup.enter.native="toQuery" />
       <el-button class="filter-item" size="mini" type="success" icon="el-icon-search" @click="toQuery">搜索</el-button>
-      <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;">
-        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click=" dialog = true;isAdd = true;">新增</el-button>
+      <div  style="display: inline-block;margin: 0px 2px;">
+        <el-button class="filter-item" size="mini" type="primary" icon="el-icon-plus" @click="dialog = true;isAdd = true" >新增</el-button>
       </div>
       <div style="display: inline-block;">
         <el-button
@@ -30,6 +30,7 @@
       </div>
       <div style="display: inline-block;">
         <el-button
+          :disabled="data.length === 0 || $refs.table.selection.length === 0"
           class="filter-item"
           size="mini"
           type="primary"
@@ -39,31 +40,62 @@
       </div>
       <div style="display: inline-block;">
         <el-button
+          :disabled="data.length === 0 || $refs.table.selection.length === 0"
           class="filter-item"
           size="mini"
           type="primary"
           icon="el-icon-edit"
-          @click="doEnhanceJava"
-        >Java增强</el-button>
+          @click="doEnhanceJava"  >Java增强</el-button>
       </div>
       <div style="display: inline-block;">
         <el-button
+          :disabled="data.length === 0 || $refs.table.selection.length === 0"
           class="filter-item"
           size="mini"
           type="primary"
           icon="el-icon-upload"
-          @click="importOnlineForm"
-        >从数据库导入表单</el-button>
+          @click="importOnlineForm" >从数据库导入表单</el-button>
       </div>
-      <div v-permission="['admin', 'timing:add']" style="display: inline-block;margin: 0px 2px;">
+      <div  style="display: inline-block;margin: 0px 2px;">
         <el-button
+          :disabled="data.length === 0 || $refs.table.selection.length === 0"
           class="filter-item"
           size="mini"
           type="primary"
           icon="el-icon-plus"
-          @click="goGenerateCode"
-        >代码生成</el-button>
+          @click="goGenerateCode" >代码生成</el-button>
       </div>
+    <!--Form表单-->
+    <el-dialog :visible.sync="dialog" :close-on-click-modal="false" :before-close="cancel" :title="isAdd ? '新增任务' : '编辑任务'" append-to-body width="800px">
+      <el-form ref="form" :model="form" :rules="rules" size="small" label-width="100px">
+        <el-form-item label="任务名称" prop="jobName">
+          <el-input v-model="form.jobName" style="width: 460px;"/>
+        </el-form-item>
+        <el-form-item label="Bean名称" prop="beanName">
+          <el-input v-model="form.beanName" style="width: 460px;"/>
+        </el-form-item>
+        <el-form-item label="执行方法" prop="methodName">
+          <el-input v-model="form.methodName" style="width: 460px;"/>
+        </el-form-item>
+        <el-form-item label="参数内容">
+          <el-input v-model="form.params" style="width: 460px;"/>
+        </el-form-item>
+        <el-form-item label="Cron表达式" prop="cronExpression">
+          <el-input v-model="form.cronExpression" style="width: 460px;"/>
+        </el-form-item>
+        <el-form-item label="任务状态">
+          <el-radio v-model="form.isPause" label="false">启用</el-radio>
+          <el-radio v-model="form.isPause" label="true" >暂停</el-radio>
+        </el-form-item>
+        <el-form-item label="任务描述">
+          <el-input v-model="form.remark" style="width: 460px;" rows="2" type="textarea"/>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="text" @click="cancel">取消</el-button>
+        <el-button :loading="loading" type="primary" @click="doSubmit">确认</el-button>
+      </div>
+    </el-dialog>
       <!--表格渲染-->
       <el-table v-loading="loading" ref="table" :data="data" size="small" style="width: 100%;">
         <el-table-column type="selection" width="55" />
@@ -75,28 +107,24 @@
         <el-table-column :show-overflow-tooltip="true" prop="jobName"  width="140px" label="同步数据库状态"/>
         <el-table-column label="操作" width="180px" align="center" fixed="right">
           <template slot-scope="scope">
-            <el-button
-              v-permission="['admin', 'timing:edit']"
+            <el-button 
               size="mini"
               style="margin-right: 3px;"
               type="text"
               @click="edit(scope.row)" >编辑</el-button>
-            <el-button
-              v-permission="['admin', 'timing:edit']"
+            <el-button 
               size="mini"
               style="margin-left: -2px"
               type="text"
               @click="execute(scope.row.id)"
             >执行</el-button>
-            <el-button
-              v-permission="['admin', 'timing:edit']"
+            <el-button 
               size="mini"
               style="margin-left: 3px"
               type="text"
               @click="updateStatus(scope.row.id, scope.row.isPause ? '恢复' : '暂停')"
             >{{ scope.row.isPause ? "恢复" : "暂停" }}</el-button>
-            <el-popover
-              v-permission="['admin', 'timing:del']"
+            <el-popover 
               :ref="scope.row.id"
               placement="top"
               width="200"
@@ -127,6 +155,7 @@
       @size-change="sizeChange"
       @current-change="pageChange" />
   </div>
+
 </template>
 <script>
 import checkPermission from "@/utils/permission";
@@ -252,7 +281,6 @@ export default {
         });
     },
     toQuery() {
-      console.log('select')
       this.page = 0;
       this.init();
     },
@@ -323,6 +351,7 @@ export default {
       };
     },
     edit(data) {
+      console.log(data)
       this.isAdd = false;
       this.form = {
         id: data.id,
@@ -331,7 +360,6 @@ export default {
         methodName: data.methodName,
         params: data.params,
         cronExpression: data.cronExpression,
-        isPause: data.isPause.toString(),
         remark: data.remark
       };
       this.dialog = true;
