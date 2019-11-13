@@ -66,7 +66,7 @@
           @click="goGenerateCode" >代码生成</el-button>
       </div>
     <!--Form表单-->
-    <el-dialog :visible.sync="dialog" :close-on-click-modal="false" :before-close="cancel" :title="isAdd ? '新增任务' : '编辑任务'" append-to-body width="800px">
+    <el-dialog :visible.sync="dialog" :close-on-click-modal="false" :before-close="cancel" :title="isAdd ? '新增任务' : '编辑任务'" append-to-body width="100%">
       <el-form ref="form" :model="form" :rules="rules" size="small" label-width="100px">
         <el-form-item label="任务名称" prop="jobName">
           <el-input v-model="form.jobName" style="width: 460px;"/>
@@ -378,4 +378,3 @@ export default {
     }
   }
 };
-</script>
