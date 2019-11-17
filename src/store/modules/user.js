@@ -35,9 +35,9 @@ const user = {
       const rememberMe = userInfo.rememberMe
       return new Promise((resolve, reject) => {
         login(username, password, code, uuid).then(res => {
-          setToken(res.token, rememberMe)
-          commit('SET_TOKEN', res.token)
-          setUserInfo(res.user, commit)
+          setToken(res.result.token, rememberMe)
+          commit('SET_TOKEN', res.result.token)
+          setUserInfo(res.result.user, commit)
           // 第一次加载菜单时用到， 具体见 src 目录下的 permission.js
           commit('SET_LOAD_MENUS', true)
           resolve()
@@ -88,11 +88,11 @@ export const logOut = (commit) => {
 
 export const setUserInfo = (res, commit) => {
   // 如果没有任何权限，则赋予一个默认的权限，避免请求死循环
-  if (res.roles.length === 0) {
+  // if (res.roles.length === 0) {
     commit('SET_ROLES', ['ROLE_SYSTEM_DEFAULT'])
-  } else {
-    commit('SET_ROLES', res.roles)
-  }
+  // } else {
+  //   commit('SET_ROLES', res.roles)
+  // }
   commit('SET_USER', res)
 }
 

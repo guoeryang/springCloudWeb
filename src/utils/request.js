@@ -31,12 +31,24 @@ service.interceptors.response.use(
   response => {
     const code = response.status
     if (code < 200 || code > 300) {
-      Notification.error({
-        title: response.message
+      Message({
+        message: response.data.message,
+        type: 'error',
+        duration: 2 * 1000
       })
       return Promise.reject('error')
     } else {
-      return response.data
+      if(response.data.success){
+        return response.data
+      }else{
+        Message({
+          message: response.data.message,
+          type: 'error',
+          duration: 2 * 1000
+        })
+        return Promise.reject('error')
+      }
+      
     }
   },
   error => {

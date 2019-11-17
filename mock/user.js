@@ -25,18 +25,25 @@ export default [
     type: 'post',
     response: config => {
       return {
-        token: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU3MzAwODc2NywiaWF0IjoxNTczMDA1MTY3fQ.UZPlfkXbLKZ_wGr6je7WjhyRaMIg3gv--y83xuYJkeabmtJh2KwQxG90dC6HcG_ySj1aAuSQh7-Q6r4cqy24GA',
-        user: {
-          username: 'admin',
-          avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-          email: 'admin@eladmin.net',
-          phone: '18888888888',
-          dept: '研发部',
-          job: '全栈开发',
-          enabled: true,
-          createTime: 1534986716000,
-          roles: ['dept:edit', 'user:list']
-        }
+        "success": true,
+        "message": "请求成功",
+        "code": 0,
+        "result": {
+          "user": {
+            "id": 1,
+            "username": "admin",
+            "avatar": "https://i.loli.net/2019/04/04/5ca5b971e1548.jpeg",
+            "email": "admin@eladmin.net",
+            "phone": "18888888888",
+            "enabled": true,
+            "password": "d63d60fbdcffb03c",
+            "salt": "6fnvpNjY",
+            "gmtCreate": "2019-10-18 17:34:18",
+            "gmtModified": "2019-11-16 03:04:15"
+          },
+          "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTU3Mzg2NTQzNSwiZXhwIjoxNTczOTM3NDM1fQ.KELvHhHKZLtHjMOrzihmmLviUXJzYf48dd_xEbj6IPg"
+        },
+        "timestamp": 1573865435720
       }
     }
   },

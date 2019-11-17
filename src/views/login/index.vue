@@ -13,7 +13,7 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="code">
-        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin">
+        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 40%" @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
         <div class="login-code">
@@ -78,8 +78,9 @@ export default {
   methods: {
     getCode() {
       getCodeImg().then(res => {
-        this.codeUrl = res.img
-        this.loginForm.uuid = res.uuid
+        console.log(res)
+        this.codeUrl = res.result.imgBase64
+        this.loginForm.uuid = res.result.uuid
       })
     },
     getCookie() {
@@ -170,7 +171,6 @@ export default {
     color: #bfbfbf;
   }
   .login-code {
-    width: 33%;
     display: inline-block;
     height: 38px;
     float: right;
