@@ -39,38 +39,10 @@
     <!--表格渲染-->
     <el-table v-loading="loading" :data="data" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" :default-expand-all="expand" row-key="id" size="small">
       <el-table-column :show-overflow-tooltip="true" label="菜单名称" width="125px" prop="name"/>
-      <el-table-column prop="icon" label="图标" align="center" width="60px">
-        <template slot-scope="scope">
-          <svg-icon :icon-class="scope.row.icon" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="sort" align="center" label="排序">
-        <template slot-scope="scope">
-          {{ scope.row.sort }}
-        </template>
-      </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="path" label="路由地址"/>
       <el-table-column :show-overflow-tooltip="true" prop="permission" label="权限标识"/>
-      <!--<el-table-column :show-overflow-tooltip="true" prop="componentName" label="组件名称"/>-->
+	  <el-table-column :show-overflow-tooltip="true" prop="buttonPermission" label="按钮权限"/>
       <el-table-column :show-overflow-tooltip="true" prop="component" label="组件路径"/>
-      <el-table-column prop="iframe" label="外链" width="75px">
-        <template slot-scope="scope">
-          <span v-if="scope.row.iframe">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="iframe" label="缓存" width="75px">
-        <template slot-scope="scope">
-          <span v-if="scope.row.cache">是</span>
-          <span v-else>否</span>
-        </template>
-      </el-table-column>
-      <el-table-column prop="iframe" label="可见" width="75px">
-        <template slot-scope="scope">
-          <span v-if="scope.row.hidden">否</span>
-          <span v-else>是</span>
-        </template>
-      </el-table-column>
       <el-table-column prop="createTime" label="创建日期" width="135px">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.gmtCreate) }}</span>

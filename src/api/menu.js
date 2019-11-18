@@ -1,13 +1,6 @@
 import request from '@/utils/request'
 
-// 获取所有的菜单树
-export function getMenusTree() {
-  return request({
-    url: 'api/menus/tree',
-    method: 'get'
-  })
-}
-
+//菜单
 export function buildMenus() {
   return request({
     url: 'menus/build',
@@ -15,20 +8,33 @@ export function buildMenus() {
   })
 }
 
+//删除
+export function del(id) {
+  return request({
+    url: 'menus/' + id,
+    method: 'delete'
+  })
+}
+
+// 获取所有的菜单树
+export function getMenusTree() {
+  return request({
+    url: 'menus/tree',
+    method: 'get'
+  })
+}
+
+
+
 export function add(data) {
   return request({
-    url: 'api/menus',
+    url: 'menus/saveOrUpdate',
     method: 'post',
     data
   })
 }
 
-export function del(id) {
-  return request({
-    url: 'api/menus/' + id,
-    method: 'delete'
-  })
-}
+
 
 export function edit(data) {
   return request({

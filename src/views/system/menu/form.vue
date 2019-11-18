@@ -108,7 +108,9 @@ export default {
           this.loading = true
           if (this.isAdd) {
             this.doAdd()
-          } else this.doEdit()
+          } else{
+			this.doEdit()
+		  } 
         } else {
           return false
         }
@@ -129,7 +131,7 @@ export default {
       })
     },
     doEdit() {
-      edit(this.form).then(res => {
+      add(this.form).then(res => {
         this.resetForm()
         this.$notify({
           title: '修改成功',
@@ -154,7 +156,7 @@ export default {
       getMenusTree().then(res => {
         this.menus = []
         const menu = { id: 0, label: '顶级类目', children: [] }
-        menu.children = res
+        menu.children = res.result
         this.menus.push(menu)
       })
     }

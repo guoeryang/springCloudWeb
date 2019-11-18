@@ -147,7 +147,7 @@ export default {
     checkPermission,
     beforeInit() {
       this.showButton = false
-      this.url = 'api/roles'
+      this.url = 'roles/list'
       const sort = 'level,asc'
       const query = this.query
       const value = query.value
