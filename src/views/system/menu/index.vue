@@ -73,7 +73,7 @@
       </el-table-column>
       <el-table-column prop="createTime" label="创建日期" width="135px">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime) }}</span>
+          <span>{{ parseTime(scope.row.gmtCreate) }}</span>
         </template>
       </el-table-column>
       <el-table-column v-if="checkPermission(['admin','menu:edit','menu:del'])" label="操作" width="130px" align="center" fixed="right">
@@ -121,12 +121,12 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/menus'
+      this.url = 'menus/list'
       const sort = 'id,desc'
       const query = this.query
       const value = query.value
       this.params = { page: this.page, size: this.size, sort: sort }
-      if (value) { this.params['blurry'] = value }
+      if (value) { this.params['name'] = value }
       if (query.date) {
         this.params['startTime'] = query.date[0]
         this.params['endTime'] = query.date[1]
