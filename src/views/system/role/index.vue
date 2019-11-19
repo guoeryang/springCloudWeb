@@ -110,7 +110,7 @@
 <script>
 import checkPermission from '@/utils/permission'
 import initData from '@/mixins/initData'
-import { del } from '@/api/role'
+import { del,getMenuByRoleId } from '@/api/role'
 import { getMenusTree } from '@/api/menu'
 import { parseTime, downloadFile } from '@/utils/index'
 import eForm from './form'
@@ -177,6 +177,7 @@ export default {
         this.menus = res.result
       })
     },
+
     handleCurrentChange(val) {
       if (val) {
         const _this = this
@@ -188,10 +189,11 @@ export default {
         this.showButton = true
         // 初始化
         this.menuIds = []
-        // 菜单数据需要特殊处理
-        val.menus.forEach(function(data, index) {
-          _this.menuIds.push(data.id)
-        })
+		getMenuByRoleId(val.id).then(res => {
+			res.result.forEach(function(data, index) {
+				_this.menuIds.push(data.id)
+			})
+		})
       }
     },
     saveMenu() {
@@ -239,13 +241,7 @@ export default {
       this.isAdd = false
       const _this = this.$refs.form
       _this.deptIds = []
-      _this.form = { id: data.id, name: data.name, remark: data.remark, depts: data.depts, dataScope: data.dataScope, level: data.level, permission: data.permission }
-      if (_this.form.dataScope === '自定义') {
-        _this.getDepts()
-      }
-      for (let i = 0; i < _this.form.depts.length; i++) {
-        _this.deptIds[i] = _this.form.depts[i].id
-      }
+      _this.form = { id: data.id, roleName: data.roleName, remark: data.remark, permission: data.permission }
       _this.dialog = true
     },
     download() {
