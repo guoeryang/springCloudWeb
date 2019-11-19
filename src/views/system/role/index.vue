@@ -44,16 +44,9 @@
             <span class="role-span">角色列表</span>
           </div>
           <el-table v-loading="loading" :data="data" highlight-current-row size="small" style="width: 100%;" @current-change="handleCurrentChange">
-            <el-table-column prop="name" label="名称"/>
-            <el-table-column prop="dataScope" label="数据权限"/>
+            <el-table-column prop="roleName" label="名称"/>
             <el-table-column prop="permission" label="角色权限"/>
-            <el-table-column prop="level" label="角色级别"/>
             <el-table-column :show-overflow-tooltip="true" prop="remark" label="描述"/>
-            <el-table-column :show-overflow-tooltip="true" width="130px" prop="createTime" label="创建日期">
-              <template slot-scope="scope">
-                <span>{{ parseTime(scope.row.createTime) }}</span>
-              </template>
-            </el-table-column>
             <el-table-column v-if="checkPermission(['admin','roles:edit','roles:del'])" label="操作" width="130px" align="center" fixed="right">
               <template slot-scope="scope">
                 <el-button v-permission="['admin','roles:edit']" size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)"/>
@@ -181,7 +174,7 @@ export default {
     },
     getMenus() {
       getMenusTree().then(res => {
-        this.menus = res
+        this.menus = res.result
       })
     },
     handleCurrentChange(val) {

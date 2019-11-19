@@ -18,7 +18,7 @@ export default {
 				this.total = res.result.length
 				this.data = res.result
 			}else{
-				this.total = res.result.totalElements
+				this.total = res.result.total
 				this.data = res.result.records
 			}
 
