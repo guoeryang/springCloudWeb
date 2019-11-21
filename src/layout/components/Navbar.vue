@@ -5,13 +5,8 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
-          <Github class="screenfull right-menu-item"/>
-        </el-tooltip>
-      </template>
-      <template v-if="device!=='mobile'">
-        <el-tooltip content="全屏" effect="dark" placement="bottom">
-          <screenfull class="screenfull right-menu-item"/>
+        <el-tooltip content="通知" effect="dark" placement="bottom">
+          <Notice class="email right-menu-item"/>
         </el-tooltip>
       </template>
       <el-dropdown class="avatar-container right-menu-item" trigger="click">
@@ -50,15 +45,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
-import Screenfull from '@/components/Screenfull'
-import Github from '@/components/Github'
+import Notice from '@/components/Notice'
 import Avatar from '@/assets/avatar/avatar.png'
 export default {
   components: {
     Breadcrumb,
     Hamburger,
-    Screenfull,
-    Github
+    Notice
   },
   data() {
     return {
